@@ -33,3 +33,13 @@ items.addEventListener('mousemove', (e) => {
 items.addEventListener('selectstart', (e) => {
   e.preventDefault();
 });
+cy.get('.items')
+  .trigger('mousedown', { which: 1, pageX: 493, pageY: 391 })
+  .trigger('mousemove', { which: 1, pageX: 271, pageY: 391 })
+  .trigger('mouseup')
+  .should($items => {
+    expect($items[0].scrollLeft).to.be.greaterThan(0);
+    expect($items[0].scrollTop).to.equal(0);
+    expect($items[0].clientWidth).to.be.lessThan($items[0].scrollWidth);
+    expect($items[0].clientHeight).to.be.lessThan($items[0].scrollHeight);
+  });
